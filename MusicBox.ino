@@ -44,7 +44,7 @@ void timerIsr() {
 void setup() {
   encoder = new ClickEncoder(A2, A3, 2); //define A2 as dt pin, A3 as Clk pin and 2 as switch
   for(int i = 8; i < 12; i++){ //configure pin 8,9,10,11 as output
-    pinMode(i, OUTPUT);  //
+    pinMode(i, OUTPUT);  
   }
 
   Timer1.initialize(1000);
@@ -69,7 +69,7 @@ void loop() {
     last = value;
   }
   
-  if(b != ClickEncoder::Open && ClickEncoder::Clicked){
+  if(b != ClickEncoder::Open && ClickEncoder::Clicked){ //if encoder is clicked
     digitalWrite(9, HIGH); //Play / Pause
     delay(100);
     digitalWrite(9, LOW);
