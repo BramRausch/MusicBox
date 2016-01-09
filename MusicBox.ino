@@ -33,6 +33,7 @@ CLK      | [ ]A3                     INT0/2[ ] |   SW
 #include <ClickEncoder.h>
 #include <TimerOne.h>
 
+//variables
 ClickEncoder *encoder;
 int16_t last, value;
 
@@ -67,24 +68,24 @@ void loop() {
         digitalWrite(11, HIGH); //Next / v++
     }
     count++;
-    if(count < 2){
-      delay(100);
-      digitalWrite(8, LOW);
+    if(count == 0){ //if encoder isn't rotated 
+      delay(100); //wait 0.1s
+      digitalWrite(8, LOW); //turn all pins low
       digitalWrite(11, LOW);
     }
     last = value;
-  } else if(pp == 1){
+  } else if(pp == 1){ //when the device is paused always store the current value as last
     last = value;  
-  }else{
-    delay(200);
-    count = 0;
+  } else{ //if encoder isn't rotated
+    delay(400); //wait 0.4s
+    count = 0; //and stop rotating
   }
   
   if(b != ClickEncoder::Open && ClickEncoder::Clicked){ //if encoder is clicked
     digitalWrite(9, HIGH); //Play / Pause
     delay(100);
     digitalWrite(9, LOW);
-    pp = !pp;
+    pp = !pp; //store current Play / Pause state
   }
 }    
 
