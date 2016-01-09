@@ -36,6 +36,9 @@ CLK      | [ ]A3                     INT0/2[ ] |   SW
 ClickEncoder *encoder;
 int16_t last, value;
 
+int count = 0;
+int pp = 0;
+
 void timerIsr() {
   encoder->service();
 }
@@ -57,22 +60,31 @@ void loop() {
   ClickEncoder::Button b = encoder->getButton();
   value += encoder->getValue();
   
-  if (value != last) { //if encoder rotated
+  if (value != last && pp == 0) { //if encoder rotated
     if(last > value){ //to the left
         digitalWrite(8, HIGH); //Prev / v--
     } else if(last < value){ //to the right
         digitalWrite(11, HIGH); //Next / v++
     }
-    delay(100);
-    digitalWrite(8, LOW);
-    digitalWrite(11, LOW);
+    count++;
+    if(count < 2){
+      delay(100);
+      digitalWrite(8, LOW);
+      digitalWrite(11, LOW);
+    }
     last = value;
+  } else if(pp == 1){
+    last = value;  
+  }else{
+    delay(200);
+    count = 0;
   }
   
   if(b != ClickEncoder::Open && ClickEncoder::Clicked){ //if encoder is clicked
     digitalWrite(9, HIGH); //Play / Pause
     delay(100);
     digitalWrite(9, LOW);
+    pp = !pp;
   }
 }    
 
