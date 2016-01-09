@@ -1,4 +1,10 @@
 # MusicBox
+##Description
+This box is an elegant way to control your music. The Music Box is controlled by only a rotary encoder so there is no unnecessary information. The controls are straight forward and elegant.
+
+##How does it work?
+In the box there is a MP3 decoder board and Arduino UNO. The Arduino controls the decoder board via a npn transistor that emulates a button press on the decoder board. So instead of four push buttons now there is one input device, the rotary encoder.
+
 ##Wiring:
 
                                           +-----+
@@ -43,3 +49,6 @@ Turn left fast | Volume down
 Turn right slow | Next
 Turn right fast | Volume up
 Click | Play / Pause
+
+##Required libraries
+* [ClickEncoder](https://github.com/0xPIT/encoder)
